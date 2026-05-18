@@ -8,9 +8,6 @@ class BST:
         self.raiz = None
 
 
-
-
-
     def insertar(self, valor):
         nuevo = Nodo(valor)
         camino = []
@@ -18,4 +15,20 @@ class BST:
 
         if self.raiz is None:
             self.raiz = nuevo
+            camino.append(self.raiz)
             return camino
+        
+
+        cola = deque([self.raiz])
+        while cola:
+            nodo_actual = cola.popleft()
+            camino.append(nodo_actual)
+
+            if actual.izquierdo is None:
+                actual.izquierdo = nuevo
+                camino.append(nuevo)
+                return camino
+            else:
+                cola.append(actual.izquierdo)  
+        
+    
