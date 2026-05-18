@@ -21,8 +21,8 @@ class BST:
 
         cola = deque([self.raiz])
         while cola:
-            nodo_actual = cola.popleft()
-            camino.append(nodo_actual)
+            actual = cola.popleft()
+            camino.append(actual)
 
             if actual.izquierdo is None:
                 actual.izquierdo = nuevo
@@ -31,4 +31,13 @@ class BST:
             else:
                 cola.append(actual.izquierdo)  
         
+            if actual.derecho is None:
+                actual.derecho = nuevo
+                camino.append(nuevo)
+                return camino
+            
+            else:
+                cola.append(actual.derecho)
+
+        return camino
     
