@@ -71,7 +71,8 @@ class TreeController:
         self._notify()
     
     def recorrer(self, tipo):
-        metodos = {"preorden": self._preorden, "inorden": self._inorden, "postorden": self._postorden}
+        metodos = {"preorden": self.arbol.preorden, "inorden": self.arbol.inorden, "postorden": self.arbol.postorden}
+
         fn = metodos.get(tipo)
         if fn is None:
             self._msg(f"Recorrido desconocido: {tipo}", "error")
@@ -90,7 +91,7 @@ class TreeController:
 
     def info(self):
         raiz_val = self.arbol.raiz.valor if self.arbol.raiz else "None"
-        return {"tipo arbol": self.arbol.tipo(), "altura": self.arbol.altura(), "raiz": raiz_val, "nodos": self.arbol.contar_nodos()}
+        return {"tipo": self.arbol.tipo(), "altura": self.arbol.altura(), "raiz": raiz_val, "nodos": self.arbol.contar_nodos()}
     
     def guardar(self, ruta):
         okay = FileManager.guardar(self.arbol, ruta)
@@ -112,7 +113,7 @@ class TreeController:
 
     def _notify(self):
         if self._on_tree_changed:
-            self._on_tree_changed(self.arbol)
+            self._on_tree_changed()
 
     def _animate(self, camino):
         if self._on_animation and camino:
