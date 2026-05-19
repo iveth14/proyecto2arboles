@@ -3,12 +3,14 @@ from PyQt5.QtCore import Qt, QTimer, QRectF
 from PyQt5.QtGui import (QPainter, QPen, QBrush, QColor,
                           QFont, QRadialGradient)
 
+
 COLOR_FONDO        = QColor("#0f1117")
 COLOR_ARISTA       = QColor("#334155")
 COLOR_NODO_RELLENO = QColor("#1e293b")
 COLOR_NODO_BORDE   = QColor("#38bdf8")
 COLOR_TEXTO        = QColor("#f1f5f9")
 COLOR_RESALTADO    = QColor("#f59e0b")   
+
 COLOR_ENCONTRADO   = QColor("#22c55e")   
 COLOR_BALANCE      = QColor("#a5f3fc")   
 
@@ -17,24 +19,30 @@ SEPARACION_Y = 70
 MARGEN_X     = 40  
 
 
-class TreeCanvas(QWidget):
 
+class TreeCanvas(QWidget):
+    
 
     def __init__(self, controller, parent=None):
         super().__init__(parent)
         self.controller = controller
         self.setMinimumSize(600, 400)
 
-        self._nodos_anim  = []    
-        self._idx_anim    = -1   
+
+
+     
+        self._nodos_anim  = []   
+        self._idx_anim    = -1    
         self._timer_anim  = QTimer(self)
         self._timer_anim.timeout.connect(self._siguiente_paso)
 
         self._posiciones = {}
         self._resaltados = {}
 
-    
+
+
     def redibujar(self):
+       
         self._calcular_posiciones()
         self.update()
 
@@ -44,6 +52,7 @@ class TreeCanvas(QWidget):
         self._nodos_anim = camino
         self._idx_anim   = -1
         self._timer_anim.start(intervalo_ms)
+
 
     def _calcular_posiciones(self):
         self._posiciones = {}
@@ -76,6 +85,7 @@ class TreeCanvas(QWidget):
         self._posiciones[nodo.valor] = (px, py)
         self._asignar_coordenadas(nodo.izquierdo, paso, profundidad + 1)
         self._asignar_coordenadas(nodo.derecho,   paso, profundidad + 1)
+
 
     def _siguiente_paso(self):
         self._idx_anim += 1
@@ -111,7 +121,7 @@ class TreeCanvas(QWidget):
         painter.setPen(COLOR_ARISTA)
         painter.setFont(QFont("Segoe UI", 13))
         painter.drawText(self.rect(), Qt.AlignCenter,
-                         "Arbol vacio\nInserta el primer valor")
+                         "Arbol vacio\nInserte el primer valor")
 
     def _dibujar_aristas(self, painter, nodo):
         if nodo is None:
