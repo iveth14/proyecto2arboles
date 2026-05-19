@@ -183,3 +183,6 @@ class TreeCanvas(QWidget):
     def resizeEvent(self, event):
         self._calcular_posiciones()
         super().resizeEvent(event)
+
+    def get_raiz(self):
+        return self.arbol.raiz

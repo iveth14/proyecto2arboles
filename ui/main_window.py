@@ -1,12 +1,10 @@
 from PyQt5.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QPushButton, QLineEdit, QLabel, QComboBox,
-    QGroupBox, QStatusBar, QFileDialog, QFrame, QTimer
+    QGroupBox, QStatusBar, QFileDialog, QFrame
 )
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QFont
 
-from ui.tree_canvas import TreeCanvas
+from PyQt5.QtCore import Qt, QTimer
 
 ESTILO = """
 QMainWindow, QWidget {
@@ -107,9 +105,7 @@ class MainWindow(QMainWindow):
         self._construir_ui()
         self._actualizar_info()
 
-    # --------------------------------------------------
-    # Construccion de la interfaz
-    # --------------------------------------------------
+
     def _construir_ui(self):
         central = QWidget()
         self.setCentralWidget(central)
@@ -117,18 +113,15 @@ class MainWindow(QMainWindow):
         layout_raiz.setContentsMargins(0, 0, 0, 0)
         layout_raiz.setSpacing(0)
 
-        # Panel izquierdo
         panel = self._construir_panel()
         panel.setFixedWidth(260)
         layout_raiz.addWidget(panel)
 
-        # Separador visual
         sep = QFrame()
         sep.setFrameShape(QFrame.VLine)
         sep.setStyleSheet("color: #1e293b;")
         layout_raiz.addWidget(sep)
 
-        # Area derecha: canvas + mensaje
         derecha = QWidget()
         layout_der = QVBoxLayout(derecha)
         layout_der.setContentsMargins(10, 10, 10, 6)
@@ -143,7 +136,6 @@ class MainWindow(QMainWindow):
 
         layout_raiz.addWidget(derecha, stretch=1)
 
-        # Barra de estado inferior
         self.barra = QStatusBar()
         self.setStatusBar(self.barra)
         self.lbl_info = QLabel("")
@@ -157,13 +149,11 @@ class MainWindow(QMainWindow):
         layout.setContentsMargins(14, 14, 14, 14)
         layout.setSpacing(14)
 
-        # Titulo
         titulo = QLabel("Arboles Binarios")
         titulo.setFont(QFont("Segoe UI", 15, QFont.Bold))
         titulo.setStyleSheet("color: #38bdf8; margin-bottom: 4px;")
         layout.addWidget(titulo)
 
-        # Tipo de arbol
         grp_tipo = QGroupBox("Tipo de arbol")
         g_tipo = QVBoxLayout(grp_tipo)
         self.combo_tipo = QComboBox()
@@ -172,7 +162,6 @@ class MainWindow(QMainWindow):
         g_tipo.addWidget(self.combo_tipo)
         layout.addWidget(grp_tipo)
 
-        # Insertar
         grp_ins = QGroupBox("Insertar valor")
         g_ins = QVBoxLayout(grp_ins)
         self.inp_insertar = QLineEdit()
@@ -185,7 +174,7 @@ class MainWindow(QMainWindow):
         g_ins.addWidget(btn_ins)
         layout.addWidget(grp_ins)
 
-        # Buscar
+        
         grp_bus = QGroupBox("Buscar valor")
         g_bus = QVBoxLayout(grp_bus)
         self.inp_buscar = QLineEdit()
@@ -197,7 +186,6 @@ class MainWindow(QMainWindow):
         g_bus.addWidget(btn_bus)
         layout.addWidget(grp_bus)
 
-        # Eliminar
         grp_eli = QGroupBox("Eliminar valor")
         g_eli = QVBoxLayout(grp_eli)
         self.inp_eliminar = QLineEdit()
@@ -210,7 +198,6 @@ class MainWindow(QMainWindow):
         g_eli.addWidget(btn_eli)
         layout.addWidget(grp_eli)
 
-        # Recorridos
         grp_rec = QGroupBox("Recorridos")
         g_rec = QVBoxLayout(grp_rec)
         for nombre, etiqueta in [
@@ -223,7 +210,6 @@ class MainWindow(QMainWindow):
             g_rec.addWidget(btn)
         layout.addWidget(grp_rec)
 
-        # Acciones generales
         grp_acc = QGroupBox("Acciones")
         g_acc = QVBoxLayout(grp_acc)
 
@@ -251,9 +237,7 @@ class MainWindow(QMainWindow):
 
         return panel
 
-    # --------------------------------------------------
-    # Slots (respuestas a acciones del usuario)
-    # --------------------------------------------------
+
     def _cambiar_tipo(self, tipo):
         self.controller.cambiar_tipo(tipo)
 
@@ -290,9 +274,6 @@ class MainWindow(QMainWindow):
             self.combo_tipo.setCurrentText(self.controller.arbol.tipo())
             self.combo_tipo.blockSignals(False)
 
-    # --------------------------------------------------
-    # Callbacks del controlador
-    # --------------------------------------------------
     def _al_cambiar_arbol(self):
         self.canvas.redibujar()
         self._actualizar_info()
