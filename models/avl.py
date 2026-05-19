@@ -112,4 +112,18 @@ class AVL(BST):
 
         return self._balancear(nodo), eliminado
     
+    def tipo(self):
+        return "AVL"
     
+    def info_balance(self):
+        info = {}
+        self._recorrer_balance(self.raiz, info)
+        return info
+    
+    def _recorrer_balance(self, nodo, info):
+        if nodo is None:
+            return
+        
+        info[nodo.valor] = self._factor_balance(nodo)
+        self._recorrer_balance(nodo.izquierdo, info)
+        self._recorrer_balance(nodo.derecho, info)
