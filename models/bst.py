@@ -106,4 +106,62 @@ class BST:
         return True
     
 
-      
+    def preorden(self):
+        resultado = []
+        self._preorden(self.raiz, resultado)
+        return resultado
+        
+    def _preorden(self, nodo, resultado):
+        if nodo is None:
+            return
+        resultado.append(nodo)
+        self._preorden(nodo.izquierdo, resultado)
+        self._preorden(nodo.derecho, resultado)
+        return resultado
+
+    def inorden(self):
+        resultado = []
+        self._inorden(self.raiz, resultado)
+        return resultado
+    
+    def _inorden(self, nodo, resultado):
+        if nodo is None:
+            return
+        self._inorden(nodo.izquierdo, resultado)
+        resultado.append(nodo)
+        self._inorden(nodo.derecho, resultado)
+    
+    def postorden(self):
+        resultado = []
+        self._postorden(self.raiz, resultado)
+        return resultado
+    
+    def _postorden(self, nodo, resultado):
+        if nodo is None:
+            return
+        self._postorden(nodo.izquierdo, resultado)
+        self._postorden(nodo.derecho, resultado)
+        resultado.append(nodo)
+
+    def altura(self):
+        return self._altura(self.raiz)
+    
+    def _altura(self, nodo):
+        if nodo is None:
+            return 0
+        return 1 + max(self._altura(nodo.izquierdo), self._altura(nodo.derecho))
+    
+    def contar_nodos(self):
+        return self._contar_nodos(self.raiz)
+    
+    def _contar_nodos(self, nodo):
+        if nodo is None:
+            return 0
+        return 1 + self._contar_nodos(nodo.izquierdo) + self._contar_nodos(nodo.derecho)
+
+    def limpiar(self):
+        self.raiz = None
+
+    def tipo(self):
+        return "BT"  
+    
