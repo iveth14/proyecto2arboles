@@ -1,8 +1,8 @@
 from collections import deque
 from .nodo import Nodo
 
-
-class BST:
+#arbol binar
+class BT:
 
     def __init__(self):
         self.raiz = None
