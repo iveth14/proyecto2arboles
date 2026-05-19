@@ -111,5 +111,29 @@ class BST:
         self._postorden(nodo.derecho, resultado)
         resultado.append(nodo)
 
+    def _minimo(self, nodo):
+        while nodo.izquierdo is not None:
+            nodo = nodo.izquierdo
+        return nodo
+    
+    def altura(self):
+        return self._altura(self.raiz)
+    
+    def _altura(self, nodo):
+        if nodo is None:
+            return 0
+        return 1 + max(self._altura(nodo.izquierdo), self._altura(nodo.derecho))
+    
+    def contar_nodos(self):
+        return self._contar_nodos(self.raiz)
+    
+    def _contar_nodos(self, nodo):
+        if nodo is None:
+            return 0
+        return 1 + self._contar_nodos(nodo.izquierdo) + self._contar_nodos(nodo.derecho)
+    def limpiar(self):
+        self.raiz = None
 
-        
+    def tipo(self):
+        return "BST"
+
