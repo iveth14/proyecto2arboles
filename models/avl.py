@@ -62,5 +62,54 @@ class AVL(BST):
             return self._rotar_izquierda(nodo)
         
         return nodo
+    
+    def insertar(self, valor):
+        camino = []
+        self.raiz = self._insertar(self.raiz, valor, camino)
+        return camino
+    
+    def _insertar_avl(self, nodo, valor, camino):
+        if nodo is None:
+            nuevo = Nodo(valor)
+            camino.append(nuevo)
+            return nuevo
+        
+        camino.append(nodo)
 
+        if valor < nodo.valor:
+            nodo.izquierdo = self._insertar_avl(nodo.izquierdo, valor, camino)
+        elif valor > nodo.valor:
+            nodo.derecho = self._insertar_avl(nodo.derecho, valor, camino)
+        else:
+            return nodo
+        
+        return self._balancear(nodo)
+    
+    def eliminar(self, valor):
+        self.raiz, eliminado = self._eliminar_avl(self.raiz, valor)
+        return eliminado
+    
+    def _eliminar_avl(self, nodo, valor):
+        if nodo is None:
+            return nodo, False
+        
+        eliminado = False
+
+        if valor < nodo.valor:
+            nodo.izquierdo, eliminado = self._eliminar_avl(nodo.izquierdo, valor)
+        elif valor > nodo.valor:
+            nodo.derecho, eliminado = self._eliminar_avl(nodo.derecho, valor)
+        else:
+            eliminado = True
+            if nodo.izquierdo is None:
+                return nodo.derecho, eliminado
+            if nodo.derecho is None:
+                return nodo.izquierdo, eliminado
+            
+            sucesor = self._minimo(nodo.derecho)
+            nodo.valor = sucesor.valor
+            nodo.derecho, _ = self._eliminar_avl(nodo.derecho, sucesor.valor)
+
+        return self._balancear(nodo), eliminado
+    
     
