@@ -169,7 +169,13 @@ class TreeCanvas(QWidget):
                                 RADIO_NODO * 2, RADIO_NODO * 2),
                          Qt.AlignCenter, str(nodo.valor))
 
-
+        if self.controller.arbol.tipo() == "AVL":
+            fb_dict = self.controller.arbol.info_balance()
+            fb = fb_dict.get(nodo.valor, 0)
+            painter.setFont(QFont("Segoe UI", 7))
+            painter.setPen(COLOR_BALANCE)
+            painter.drawText(x + RADIO_NODO - 4, y - RADIO_NODO + 10,
+                            f"fb:{fb:+d}")
 
         self._dibujar_nodos(painter, nodo.izquierdo)
         self._dibujar_nodos(painter, nodo.derecho)
