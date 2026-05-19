@@ -120,3 +120,5 @@ class TreeController:
     def _msg(self, texto, tipo="info"):
         if self._on_message:
             self._on_message(texto, tipo)
+    def get_raiz(self):
+        return self.arbol.raiz

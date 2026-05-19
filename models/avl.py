@@ -65,7 +65,7 @@ class AVL(BST):
     
     def insertar(self, valor):
         camino = []
-        self.raiz = self._insertar(self.raiz, valor, camino)
+        self.raiz = self._insertar_avl(self.raiz, valor, camino)
         return camino
     
     def _insertar_avl(self, nodo, valor, camino):
